@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: trivy
+  namespace: deployer-ci
+spec:
+  restartPolicy: Never
+  serviceAccountName: default      # read-only OK for ad-hoc scans
+  containers:
+    - name: trivy
+      image: aquasec/trivy:latest
+      imagePullPolicy: IfNotPresent
+      command: ["/bin/sh"]
+      args: ["-l"]          # login shell for history & PATH
+      stdin: true
+      tty: true
