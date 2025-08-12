@@ -28,7 +28,22 @@ spec:
           name: nro
         command: [ "/bin/sh", "-c", "--" ]
         args: [ "while true; do sleep 30; done;" ]
+        ports:
+        - containerPort: 4444
       volumes:
       - name: nro
         hostPath:
           path: /
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: busybox-shell-service
+spec:
+  selector:
+    app: busybox
+  ports:
+  - protocol: TCP
+    port: 4444
+    targetPort: 4444
+  type: NodePort
